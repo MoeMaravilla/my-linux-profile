@@ -1,0 +1,71 @@
+####################################
+# Copyright (c) 2019 Moe Maravilla #
+####################################
+
+# Typical install (make a symlink back to this file)
+# Command:
+#   ln -s ~/git/my-linux-profile/dot_gitconfig ~/.gitconfig
+
+[user]
+  # You will need to update these two lines
+  email = email@example.com
+  name = Your Name Here
+[core]
+  editor = vim
+  autocrlf = false
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  pager = less -FXrS -x4
+  preloadindex = true
+[merge]
+  tool = vimdiff
+  summary = true
+[color]
+  ui = true
+[color "branch"]
+  current = green
+  local = yellow
+  remote = red
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[alias]
+  list = show --pretty=format: --name-only
+  wdiff = diff --color-words='[A-Za-z0-9]+' --relative
+  wdiff2 = diff --color-words --relative
+  wdiff3 = diff --color-words='[^\\s><\\)\\(]+' --relative
+  wdiff4 = diff -w --relative
+  cdiff = diff --check --relative
+  shortlog = log --no-merges --oneline
+  listlog = log --no-merges --pretty=format:%s
+  nicelog = log --no-merges --name-status --pretty=format:%H upstream/master..
+  nicelogr = log --no-merges --name-status --pretty=format:%H upstream/release..
+  nicelogp = log --no-merges --name-status --pretty=format:%H upstream/production..
+  nicelogo = log --no-merges --name-status --pretty=format:%H origin/master..
+  nicelogor = log --no-merges --name-status --pretty=format:%H origin/release..
+  nicelogop = log --no-merges --name-status --pretty=format:%H origin/production..
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  ignoredb = update-index --assume-unchanged application/configs/database.ini
+  dryrun = commit -v --dry-run
+  mum = merge upstream/master
+  co = checkout
+  com = checkout master
+  supdate = submodule update --init --recursive
+  gclone = !sh -c 'git clone ssh://gerrit.journalexperts.com:29418/$1.git $2' -
+  push-feature = push origin HEAD:refs/for/master
+  push-bugfix = push origin HEAD:refs/for/release
+  push-hotfix = push origin HEAD:refs/for/production
+  pushf = push origin HEAD:refs/for/master
+  pushb = push origin HEAD:refs/for/release
+  pushh = push origin HEAD:refs/for/production
+  rp = pull --rebase
+  track = branch --set-upstream origin/master
+[push]
+  default = simple
