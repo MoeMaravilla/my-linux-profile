@@ -1,0 +1,25 @@
+"####################################
+"# Copyright (c) 2019 Moe Maravilla #
+"####################################
+
+" As root, copy this file to /etc/vimrc/vimrc.local
+
+" Fix copy paste issue in Debian-9
+let skip_defaults_vim = 1
+if has('mouse')
+  set mouse=r
+endif
+
+" Enhance vim defaults
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+set paste
+set hlsearch
+set incsearch
+set ts=2
+set sw=2
+set nocompatible
+set wildmode=longest,list
+set ruler

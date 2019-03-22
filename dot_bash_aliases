@@ -1,0 +1,45 @@
+#! /bin/bash
+####################################
+# Copyright (c) 2019 Moe Maravilla #
+####################################
+
+# This file runs in two modes:
+# 1) Directly executable:
+#    Determins its own location and adds sourcing of itself to ~/.bashrc
+# 2) Sourced:
+#    Sets up the aliases below
+
+# See if the script was run (as opposed to sourced)
+if [[ ${BASH_SOURCE[0]} == $0 ]]; then
+
+  # See if the script is already installed
+  home_bash_aliases=$(realpath ~/.bash_aliases)
+  this_bash_aliases=$(realpath $0)
+  if [[ $home_bash_aliases == $this_bash_aliases ]]; then
+    echo 'Your ~/.bashrc file already sources dot_bash_aliases'
+    exit 1
+  elif [[ -e ~/.bash_aliases ]]; then
+    echo 'You already have a ~/.bash_aliases file'
+    exit 1
+  fi
+
+  echo 'Installing dot_bash_aliases in your ~/.bashrc'
+
+  # Create a symlink to this file
+  ln -s $this_bash_aliases ~/.bash_aliases
+
+  # Check if ~/.bash_aliases not sourced in ~/.bashrc
+  if ! grep -q '~/.bash_aliases' ~/.bashrc; then
+
+    cat <<EOF >> ~/.bashrc
+
+# Enable dot_bash_aliases
+if [[ -e $this_bash_aliases ]]; then
+  source $this_bash_aliases
+fi
+EOF
+  fi
+  exit 0
+fi
+
+alias grep='grep --color=auto'

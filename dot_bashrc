@@ -1,0 +1,42 @@
+#! /bin/bash
+####################################
+# Copyright (c) 2019 Moe Maravilla #
+####################################
+
+# This file runs in two modes:
+# 1) Directly executable:
+#    Determins its own location and adds sourcing of itself to ~/.bashrc
+# 2) Sourced:
+#    Sets up the environment below
+
+# See if the script was run (as opposed to sourced)
+if [[ ${BASH_SOURCE[0]} == $0 ]]; then
+
+  # See if the script is already installed
+  if grep -q 'my-linux-profile/dot_bashrc' ~/.bashrc; then
+    echo 'Your ~/.bashrc file already sources dot_bashrc'
+    exit 1
+  fi
+
+  echo 'Installing dot_bashrc in your ~/.bashrc'
+
+  # Get the absolute path to this script
+  dot_bashrc_path=$(realpath $0)
+
+  cat <<EOF >> ~/.bashrc
+
+# Enable dot_bashrc
+if [[ -e $dot_bashrc_path ]]; then
+  source $dot_bashrc_path
+fi
+EOF
+  exit 0
+fi
+
+PS1='
+\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$PWD\[\033[00m\]\[\e[m\]
+\$ '
+
+export EDITOR=vi
+
+set -o vi
