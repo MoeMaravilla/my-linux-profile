@@ -1,0 +1,91 @@
+#! /bin/bash
+####################################
+# Copyright (c) 2019 Moe Maravilla #
+####################################
+
+# Sample git_prompt
+#   user@host:dir master      # clean working directory
+#   user@host:dir master*     # dirty working directory
+#   user@host:dir master*^    # dirty working directory with stash
+#   user@host:dir master^     # clean working directory with stash
+
+# This file runs in two modes:
+# 1) Directly executable:
+#    Determins its own location and adds sourcing of itself to ~/.bashrc
+# 2) Sourced:
+#    Sets up prompt to reflect git status and stash
+
+# See if the script was run (as opposed to sourced)
+if [[ ${BASH_SOURCE[0]} == $0 ]]; then
+
+  # See if the script is already installed
+  if grep -q 'my-linux-profile/git_prompt' ~/.bashrc; then
+    echo 'Your ~/.bashrc file already sources git_prompt'
+    exit 1
+  fi
+
+  echo 'Installing git_prompt in your ~/.bashrc'
+  echo 'Use git_prompt_on to enable'
+  echo 'Use git_prompt_off to disable'
+
+  # Get the absolute path to this script
+  git_prompt_path=$(realpath $0)
+
+  cat <<EOF >> ~/.bashrc
+
+# Enable git_prompt
+if [[ -e $git_prompt_path ]]; then
+  source $git_prompt_path
+  git_prompt_on
+fi
+EOF
+  exit 0
+fi
+
+# Used by the end-user to toggle "on" the git_prompt feature
+function git_prompt_on {
+  GIT_PROMPT=on
+}
+
+# Used by the end-user to toggle "off" the git_prompt feature
+function git_prompt_off {
+  GIT_PROMPT=off
+}
+
+# Gets the current working git branch
+function get_git_branch {
+  git_branch=$(git branch --no-color 2> /dev/null)
+  rc=$?
+  if [[ $rc -eq 0 ]]; then
+    echo "$git_branch"| awk '/*/ {print $2}'
+  fi
+  return $rc
+}
+
+# Outputs '*' if git working directory has modifications
+function check_git_status {
+  git status -u 2> /dev/null| grep -Eq 'nothing to commit, working (directory|tree) clean' || echo '*'
+}
+
+# Outputs '^' if git stash exists
+function check_git_stash {
+  git stash list 2> /dev/null| grep -q '^.*$' && echo '^'
+}
+
+# Creates the git_prompt with color
+function git_prompt {
+  # Check that the user wants the git_prompt on and that git is installed
+  # This feature runs three git commands everytime the prompt displays
+  # In very large repositories or NFS accessed repositories the commands may take some time to run
+  if [[ $GIT_PROMPT == 'on' ]] && which git > /dev/null; then
+    ggb=$(get_git_branch)
+    if [[ $? -eq 0 ]]; then
+      echo -e " \e[0;36m$ggb\e[0;31m$(check_git_status)$(check_git_stash)\e[m"
+    fi
+  fi
+}
+
+# This variable is resolved each time the linux prompt is printed
+PS1='
+\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$PWD\[\033[00m\]$(git_prompt)
+\$ '
