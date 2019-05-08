@@ -7,6 +7,8 @@
 #   ln -s ~/git/my-linux-profile/dot_gitconfig ~/.gitconfig
 
 [user]
+  # $ git config --global user.name "First Last"
+  # $ git config --global user.email "name@example.com"
   # You will need to update these two lines
   email = email@example.com
   name = Your Name Here
