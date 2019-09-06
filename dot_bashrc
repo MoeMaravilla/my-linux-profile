@@ -38,5 +38,6 @@ PS1='
 \$ '
 
 export EDITOR=vi
+export SYSTEMD_PAGER=''
 
 set -o vi
