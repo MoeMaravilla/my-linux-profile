@@ -1,0 +1,1 @@
+*/10 * * * * tail -1 $HOME/.bash_history| grep '^#' || echo "##### $(date +\%Y/\%m/\%d-\%H:\%M:\%S)" >> $HOME/.bash_history

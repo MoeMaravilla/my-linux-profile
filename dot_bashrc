@@ -40,4 +40,8 @@ PS1='
 export EDITOR=vi
 export SYSTEMD_PAGER=''
 
+HISTSIZE=10000
+HISTFILESIZE=100000
+export PROMPT_COMMAND='history -a'
+
 set -o vi

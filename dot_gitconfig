@@ -71,3 +71,5 @@
   track = branch --set-upstream origin/master
 [push]
   default = simple
+[pull]
+	ff = only
