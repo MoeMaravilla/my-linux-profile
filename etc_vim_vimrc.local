@@ -1,8 +1,9 @@
-"####################################
-"# Copyright (c) 2019 Moe Maravilla #
-"####################################
+"#########################################
+"# Copyright (c) 2019-2023 Moe Maravilla #
+"#########################################
 
-" As root, copy this file to /etc/vimrc/vimrc.local
+" As root, copy this file to /etc/vim/vimrc.local
+" sudo cp etc_vim_vimrc.local /etc/vim/vimrc.local
 
 " Fix copy paste issue in Debian-9
 let skip_defaults_vim = 1
