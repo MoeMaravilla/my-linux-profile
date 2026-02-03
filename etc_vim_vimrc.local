@@ -1,5 +1,5 @@
 "#########################################
-"# Copyright (c) 2019-2023 Moe Maravilla #
+"# Copyright (c) 2019-2026 Moe Maravilla #
 "#########################################
 
 " As root, copy this file to /etc/vim/vimrc.local
@@ -16,7 +16,27 @@ syntax on
 filetype on
 filetype indent on
 filetype plugin on
+
+" Colors for vimdiff
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=#2e4b2e
+highlight DiffDelete cterm=bold ctermfg=9  ctermbg=52 gui=none guifg=bg guibg=#4c1e15
+highlight DiffChange cterm=bold ctermfg=12 ctermbg=235 gui=none guifg=bg guibg=#45565c
+highlight DiffText   cterm=bold ctermfg=15 ctermbg=88  gui=none guifg=bg guibg=#996d74
+
+" Clear default background colors to make text readable
+hi clear SpellBad
+hi clear SpellCap
+hi clear SpellRare
+hi clear SpellLocal
+
+" Use underlines for terminal and undercurls for GUI (gVim)
+hi SpellBad   cterm=underline gui=undercurl guisp=Red
+hi SpellCap   cterm=underline gui=undercurl guisp=Blue
+hi SpellRare  cterm=underline gui=undercurl guisp=Magenta
+hi SpellLocal cterm=underline gui=undercurl guisp=Cyan
+
 set paste
+set spell
 set hlsearch
 set incsearch
 set ts=2
