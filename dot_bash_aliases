@@ -52,6 +52,12 @@ alias gc="GREP_COLOR='1;36' grep --color=always"
 alias diff='diff --color=auto'
 alias sdiff='diff --color=auto --side-by-side'
 alias add-modified="git add \$(git status -u| awk '/modified:/ {print \$2}')"
+alias yt-dl='docker run \
+                  --rm -i \
+                  -e PGID=$(id -g) \
+                  -e PUID=$(id -u) \
+                  -v "$(pwd)":/workdir:rw \
+                  mikenye/youtube-dl'
 
 # Linux stuff
 # This eclipses /usr/bin/join
